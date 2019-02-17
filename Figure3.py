@@ -1,9 +1,7 @@
 import numpy as np
 import random
-import math
 
 random.seed(1)
-
 
 def randomWalk():
     walk = []
@@ -66,33 +64,33 @@ def LoopUntilConverged(walkArray, alpha, epsilon, lambdaVar):
     error = epsilon + 1
     counter = 0
     weight = np.array([0, .5, .5, .5, .5, .5, 1])
-    # weight = np.array([0., 0., 0., 0., 0., 0., 1])
     while error >= epsilon:
         counter += 1  # Count iterations for this training set
-        delta_w = np.array([0., 0., 0., 0., 0., 0., 0.])
+        delta_w = np.array([0., 0., 0., 0., 0., 0., 0.]) # Fresh delta_w each iteration
         for sequence in range(len(walkArray)):
             for t in range(0, len(walkArray[sequence])-1):
+                # identify the states
                 t_1_State = walkArray[sequence][t+1]
                 t_state = walkArray[sequence][t]
+                # initialize the x arrays
                 x_t = np.array([0., 0., 0., 0., 0., 0., 0.])
                 x_t_1 = np.array([0., 0., 0., 0., 0., 0., 0.])
                 x_t[t_state] = 1
                 x_t_1[t_1_State] = 1
+                # Calculate Pt and PT+1
                 P_t = np.matmul(np.transpose(weight), x_t)
                 P_t_1 = np.matmul(np.transpose(weight), x_t_1)
+                # initialize the gradient variables
                 gradientP = np.array([0., 0., 0., 0., 0., 0., 0.])
-                lambdaGradientP = gradientP
-                for k in range(0, t+1):
+                lambdaGradientP = np.array([0., 0., 0., 0., 0., 0., 0.])
+                for k in range(0, t+1): #
                     k_state = walkArray[sequence][k]
                     gradientP[k_state] = 1
                     lambdaGradientP[k_state] = (lambdaVar ** (t-k)) * gradientP[k_state]
-                    pass
                 current_delta_w = alpha * (P_t_1 - P_t) * lambdaGradientP
-            delta_w += current_delta_w
-            pass
-
+            delta_w += current_delta_w # At the end of each sequence add each delta_w to a big delta_w variable
         error = sum(abs(delta_w))  # Calculate Error
-        weight = weight + delta_w
+        weight = weight + delta_w # after all of the sequences in this training set have been evaluated, add delta_w to the weight
     return weight, counter
 
 
