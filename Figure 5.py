@@ -44,10 +44,10 @@ def ExperimentTwo(walkArray, alpha, lambdaVar):
     return weight
 
 # basic implementation
-alphaArray = [0.00, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60]
+alphaArray = [0.005, 0.01, 0.05, 0.01, 0.05, 0.1, 0.15, 0.20, 0.25]
 correctValueFunction = np.array([0., 1./6, 2./6, 3./6, 4./6, 5./6, 1.])
 
-lambdaArray = [0.0, .3, .8, 1.0]
+lambdaArray = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 # lambdaArray = [0.5]
 avgRMSEArray = []
 for lambdaVar in lambdaArray:
