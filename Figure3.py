@@ -1,5 +1,6 @@
 import numpy as np
 import random
+from matplotlib import pyplot as plt
 
 random.seed(1)
 
@@ -102,6 +103,7 @@ epsilon = 0.01
 correctValueFunction = np.array([0., 1./6, 2./6, 3./6, 4./6, 5./6, 1.])
 
 lambdaArray = [0, .1, .3, .5, .7, .9, 1]
+avgRMSEArray = []
 # lambdaArray = [1]
 # avgConvergenceSteps = []
 for lambdaVar in lambdaArray:
@@ -134,9 +136,16 @@ for lambdaVar in lambdaArray:
     avgWeight = np.average(allWeightsArray, axis=0)
     avgError = np.average(allErrorsArray, axis=0)
     avgRMSE = np.average(allRMSEArray, axis=0)
+    avgRMSEArray.append(avgRMSE)
     print("Lambda: " + str(lambdaVar) + " Avg Steps to Convege: " + str(avgIterationsToConverge))
     print("Average Weight: " + str(avgWeight))
     print("Average Error: " + str(avgError))
     print("Root Mean Squared Error: " + str(avgRMSE))
     print("")
+
+plt.plot(lambdaArray, avgRMSEArray, marker='o')
+plt.title('Figure 3')
+plt.xlabel("Lambda")
+plt.ylabel("RMSE")
+plt.show()
 
