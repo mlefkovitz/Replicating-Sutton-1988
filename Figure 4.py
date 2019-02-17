@@ -15,7 +15,7 @@ for i in range(0,100):
         scoreArray.append(S1)
     trainingSetArray.append([walkArray, scoreArray])
 
-def LoopUntilConverged(walkArray, alpha, epsilon, lambdaVar):
+def ExperimentTwo(walkArray, alpha, epsilon, lambdaVar):
     error = epsilon + 1
     counter = 0
     weight = np.array([0, .5, .5, .5, .5, .5, 1])
@@ -71,7 +71,7 @@ for lambdaVar in lambdaArray:
         #                                                                       previousValueFunction, alpha, gamma,
         #                                                                       epsilon, lambdaVar)
 
-        weight, counter = LoopUntilConverged(walkArray, alpha, epsilon, lambdaVar)
+        weight, counter = ExperimentTwo(walkArray, alpha, epsilon, lambdaVar)
 
         weightError = correctValueFunction - weight
         weightError = weightError[1:-1]
@@ -96,8 +96,7 @@ for lambdaVar in lambdaArray:
     print("")
 
 plt.plot(lambdaArray, avgRMSEArray, marker='o')
-plt.title('Figure 3')
+plt.title('Figure 4')
 plt.xlabel("Lambda")
 plt.ylabel("RMSE")
 plt.show()
-
