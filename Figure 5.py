@@ -17,7 +17,7 @@ for i in range(0,100):
     trainingSetArray.append([walkArray, scoreArray])
 
 # basic implementation
-alphaArray = [0.005, 0.01, 0.05, 0.01, 0.05, 0.1, 0.15, 0.20, 0.25]
+alphaArray = [0.001, 0.005, 0.01, 0.05, 0.1, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18, 0.19, 0.20, 0.21, 0.22, 0.23, 0.24, 0.25]
 correctValueFunction = np.array([0., 1./6, 2./6, 3./6, 4./6, 5./6, 1.])
 
 lambdaArray = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
@@ -51,18 +51,11 @@ for lambdaVar in lambdaArray:
         avgRMSE = np.average(alphaRMSEArray, axis=0)
         avgRMSEArrayAlpha.append(avgRMSE)
         print("Lambda: " + str(lambdaVar) + " Alpha: " + str(alpha) + " Root Mean Squared Error: " + str(avgRMSE))
-    avgRMSEArray.append(avgRMSEArrayAlpha)
+    bestRMSE = min(avgRMSEArrayAlpha)
+    avgRMSEArray.append(bestRMSE)
 
-labels = ["Lambda = " + str(lambdaArray[0]),
-            "Lambda = " + str(lambdaArray[1]),
-            "Lambda = " + str(lambdaArray[2]),
-            "Lambda = " + str(lambdaArray[3])]
-
-for i,l in zip(avgRMSEArray,labels):
-    plt.plot(alphaArray, i, label=l, marker='o')
-    plt.legend(labels)
-plt.title('Figure 4')
-plt.xlabel("alpha")
-plt.ylabel("RMSE")
-plt.ylim(0, 0.65)
+plt.plot(lambdaArray, avgRMSEArray, marker='o')
+plt.title('Figure 5')
+plt.xlabel("Lambda")
+plt.ylabel("RMSE using best alpha")
 plt.show()
