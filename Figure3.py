@@ -19,10 +19,12 @@ def LoopUntilConverged(walkArray, alpha, epsilon, lambdaVar):
     error = epsilon + 1
     counter = 0
     weight = np.array([0, .5, .5, .5, .5, .5, 1])
+    # weight = np.array([0, 0., 0., 0., 0., 0., 1])
     while error >= epsilon:
         counter += 1  # Count iterations for this training set
         delta_w = np.array([0., 0., 0., 0., 0., 0., 0.]) # Fresh delta_w each iteration
         for sequence in range(len(walkArray)):
+            current_delta_w = np.array([0., 0., 0., 0., 0., 0., 0.])
             for t in range(0, len(walkArray[sequence])-1):
                 # identify the states
                 t_1_State = walkArray[sequence][t+1]
@@ -42,7 +44,7 @@ def LoopUntilConverged(walkArray, alpha, epsilon, lambdaVar):
                     k_state = walkArray[sequence][k]
                     gradientP[k_state] = 1
                     lambdaGradientP[k_state] = (lambdaVar ** (t-k)) * gradientP[k_state]
-                current_delta_w = alpha * (P_t_1 - P_t) * lambdaGradientP
+                current_delta_w += alpha * (P_t_1 - P_t) * lambdaGradientP
             delta_w += current_delta_w # At the end of each sequence add each delta_w to a big delta_w variable
         error = sum(abs(delta_w))  # Calculate Error
         weight = weight + delta_w # after all of the sequences in this training set have been evaluated, add delta_w to the weight
@@ -50,14 +52,12 @@ def LoopUntilConverged(walkArray, alpha, epsilon, lambdaVar):
 
 # basic implementation
 alpha = 0.01
-gamma = 1
 epsilon = 0.01
 correctValueFunction = np.array([0., 1./6, 2./6, 3./6, 4./6, 5./6, 1.])
 
 lambdaArray = [0, .1, .3, .5, .7, .9, 1]
+# lambdaArray = [0.5]
 avgRMSEArray = []
-# lambdaArray = [1]
-# avgConvergenceSteps = []
 for lambdaVar in lambdaArray:
     counters = [] # Count the iterations to Converge
     allWeightsArray = [] # Store the weights for each training set
@@ -66,10 +66,6 @@ for lambdaVar in lambdaArray:
     for trainingSet in trainingSetArray:
         walkArray = trainingSet[0]
         scoreArray = trainingSet[1]
-        previousValueFunction = np.array([0., 0., 0., 0., 0., 0., 0.])
-        # currentValueFunction, eligibilityMatrix, counter = LoopUntilConverged(walkArray, scoreArray,
-        #                                                                       previousValueFunction, alpha, gamma,
-        #                                                                       epsilon, lambdaVar)
 
         weight, counter = LoopUntilConverged(walkArray, alpha, epsilon, lambdaVar)
 
