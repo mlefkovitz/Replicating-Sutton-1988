@@ -49,15 +49,9 @@ def loopThroughSequence(walkArray, scoreArray, previousValueFunction, alpha, gam
     currentValueFunction = previousValueFunction
     for sequence in range(len(walkArray)):
         eligibility = np.array([0., 0., 0., 0., 0., 0., 0.])
-        # currentValueFunction = previousValueFunction
-        # currentStateNumber = 0
-        # currentScore = scoreArray[sequence][currentStateNumber]
-        # currentState = walkArray[sequence][currentStateNumber]
-        # print("State " + str(currentStateNumber) + ": " + str(currentState) + "  Score: " + str(currentScore))
         for currentStateNumber in range(1, len(walkArray[sequence])):
             currentState = walkArray[sequence][currentStateNumber]
             currentScore = scoreArray[sequence][currentStateNumber]
-            # print("State " + str(currentStateNumber) + ": " + str(currentState) + "  Score: " + str(currentScore))
             previousState = walkArray[sequence][currentStateNumber - 1]
             eligibility[previousState] = 1
             reward = currentScore
@@ -66,8 +60,37 @@ def loopThroughSequence(walkArray, scoreArray, previousValueFunction, alpha, gam
             currentValueFunction = currentValueFunction + valueFunctionUpdatePortion * eligibility
             eligibility = gamma * lambdaVar * eligibility
         eligibilityMatrix.append(eligibility)
-        # previousValueFunction = currentValueFunction
     return currentValueFunction, eligibilityMatrix
+
+def LoopUntilConverged(walkArray, scoreArray, previousValueFunction, alpha, gamma, epsilon, lambdaVar):
+    error = epsilon + 1
+    counter = 0
+    while error >= epsilon:
+        counter += 1  # Count iterations for this training set
+        # currentValueFunction, eligibilityMatrix = loopThroughSequence(walkArray, scoreArray, previousValueFunction,
+        #                                                               alpha, gamma, lambdaVar)
+        eligibilityMatrix = []
+        currentValueFunction = previousValueFunction
+        for sequence in range(len(walkArray)):
+            eligibility = np.array([0., 0., 0., 0., 0., 0., 0.])
+            for currentStateNumber in range(1, len(walkArray[sequence])):
+                currentState = walkArray[sequence][currentStateNumber]
+                currentScore = scoreArray[sequence][currentStateNumber]
+                previousState = walkArray[sequence][currentStateNumber - 1]
+                eligibility[previousState] = 1
+                reward = currentScore
+                valueFunctionUpdatePortion = alpha * (
+                        reward + gamma * previousValueFunction[currentState] - previousValueFunction[previousState])
+                currentValueFunction = currentValueFunction + valueFunctionUpdatePortion * eligibility
+                eligibility = gamma * lambdaVar * eligibility
+            eligibilityMatrix.append(eligibility)
+
+
+        error = sum(abs(currentValueFunction - previousValueFunction))  # Calculate Error
+        previousValueFunction = currentValueFunction
+    return currentValueFunction, eligibilityMatrix, counter
+
+
 
 # basic implementation
 alpha = 0.01
@@ -75,8 +98,8 @@ gamma = 1
 epsilon = 0.01
 correctValueFunction = np.array([0., 1./6, 2./6, 3./6, 4./6, 5./6, 0.])
 
-lambdaArray = [0, .1, .3, .5, .7, .9, 1]
-# lambdaArray = [1]
+# lambdaArray = [0, .1, .3, .5, .7, .9, 1]
+lambdaArray = [1]
 # avgConvergenceSteps = []
 for lambdaVar in lambdaArray:
     counters = [] # Count the iterations to Converge
@@ -85,15 +108,9 @@ for lambdaVar in lambdaArray:
         walkArray = trainingSet[0]
         scoreArray = trainingSet[1]
         previousValueFunction = np.array([0., 0., 0., 0., 0., 0., 0.])
-        error = 1
-        counter = 0
-        previousIterationValueFunction = previousValueFunction # Not clear
-        while error >= epsilon:
-            counter += 1 # Count iterations for this training set
-            currentValueFunction, eligibilityMatrix = loopThroughSequence(walkArray, scoreArray, previousIterationValueFunction, alpha, gamma, lambdaVar)
-
-            error = sum(abs(currentValueFunction - previousIterationValueFunction)) #Calculate Error
-            previousIterationValueFunction = currentValueFunction
+        currentValueFunction, eligibilityMatrix, counter = LoopUntilConverged(walkArray, scoreArray,
+                                                                              previousValueFunction, alpha, gamma,
+                                                                              epsilon, lambdaVar)
 
         # print("Value Function: " + str(currentValueFunction) + " Error: " + str(error))
         allValueFunctions.append(currentValueFunction)
