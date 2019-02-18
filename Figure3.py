@@ -95,5 +95,6 @@ plt.plot(lambdaArray, avgRMSEArray, marker='o')
 plt.title('Figure 3')
 plt.xlabel("Lambda")
 plt.ylabel("RMSE")
+plt.savefig('Figure3.png', bbox_inches='tight')
 plt.show()
 
