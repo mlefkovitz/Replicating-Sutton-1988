@@ -1,7 +1,7 @@
 import numpy as np
 import random
 from matplotlib import pyplot as plt
-from RandomWalk import randomWalk
+from Project1.RandomWalk import randomWalk
 
 random.seed(1)
 
