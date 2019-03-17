@@ -1,39 +1,22 @@
 # 7642Spring2019gth836x
 
-## Project 1
+## Project 2
 Python Files:
-- RandomWalk.py
-- Figure3.py
-- Experiment2.py
-- Figure4.py
-- Figure5.py
+- Lunar Lander Heuristic.py
+- Lunar Lander PG.py
+- Lunar Lander PG Hyperparameters.py
 
-### RandomWalk.py
-- Contains the randomWalk function.
-- When called, this function returns a single random walk.
+### Lunar Lander Heuristic.py
+- Uses the heuristic laid out in OpenAI's documentation
+- Solves the problem in a single episode (no learning needed)
 
-### Figure3.py
-- Implements numpy, random, and matplotlib. Also implements the randomWalk function above.
-- Seeded with random.seed(1)
-- Initially creates 100 training sets of 10 randomWalk sequences.
--Loops through each training set with a set of lambdas to compute RMSE for each lambda, repeating until convergence (Experiment 1).
-- Plots RMSE vs Lambda and outputs to file (Sutton Figure 3).
+### Lunar Lander PG.py
+- Implements numpy, gym, math, copy, and matplotlib.
+- Seeded with seed = 100 (I like this number better than 1 or 0)
+- Uses Policy Gradient algorithm originally from Karpathy's blog to solve the Lunar Lander problem
+- Saves the best model before the maximum episodes and runs 100 trials against that model
+- Plots all of the training episodes vs reward
+- Plots all of the trials vs reward
 
-### Experiment2.py
-- Contains the ExperimentTwo function.
-- When called, this function returns the weight calculated by the TD equation for the given randomWalk sequence, lambda, and alpha.
-
-### Figure4.py
-- Implements numpy, random, and matplotlib. Also implements the randomWalk and ExperimentTwo functions above.
-- Seeded with random.seed(1)
-- Initially creates 100 training sets of 10 randomWalk sequences.
-- Loops through each training set with a set of lambdas and alphas to compute RMSE for each lambda-alpha combination (Experiment 2).
-- Plots RMSE vs alpha for each lambda and outputs to file (Sutton Figure 4).
-
-### Figure5.py
-- Implements numpy, random, and matplotlib. Also implements the randomWalk and ExperimentTwo functions above.
-- Seeded with random.seed(1)
-- Initially creates 100 training sets of 10 randomWalk sequences.
-- Loops through each training set with a set of lambdas and alphas to compute RMSE for each lambda-alpha combination (Experiment 2).
-- Identifies best RMSE for each lambda.
-- Plots RMSE vs lambda and outputs to file (Sutton Figure 5).
+### Lunar Lander PG Hyperparameters.py
+- Same as above, but as a function that can be called with hyperparameters as inputs (and outputs to appropriately named files)
