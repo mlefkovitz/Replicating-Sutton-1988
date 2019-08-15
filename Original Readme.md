@@ -1,12 +1,6 @@
-# Replicating Sutton 1988
+# 7642Spring2019gth836x
 
-## Introduction
-
-In this project, I replicate the experiments used by Sutton in “Learning to Predict by the Methods of Temporal Differences” [Sutton, 1988]. Sutton performs two experiments and produces a number of figures using a bounded Random Walk as a simple example. His experiments show the performance difference between TD(1) (the Widrow-Hoff supervised learning rule) and TD(lambda). TD(lambda) outperforms TD(1) in both experiments (for some value of lambda < 1). I successfully reproduce the figures and explain the implementation used to recreate the experiments.
-
-[Sutton's full paper](/sutton-88-with-erratum.pdf)
-
-## The Project
+## Project 1
 Python Files:
 - RandomWalk.py
 - Figure3.py
@@ -19,7 +13,6 @@ Python Files:
 - When called, this function returns a single random walk.
 
 ### Figure3.py
-![Figure 3](Figure3.png)
 - Implements numpy, random, and matplotlib. Also implements the randomWalk function above.
 - Seeded with random.seed(1)
 - Initially creates 100 training sets of 10 randomWalk sequences.
@@ -31,7 +24,6 @@ Python Files:
 - When called, this function returns the weight calculated by the TD equation for the given randomWalk sequence, lambda, and alpha.
 
 ### Figure4.py
-![Figure 4](Figure4.png)
 - Implements numpy, random, and matplotlib. Also implements the randomWalk and ExperimentTwo functions above.
 - Seeded with random.seed(1)
 - Initially creates 100 training sets of 10 randomWalk sequences.
@@ -39,7 +31,6 @@ Python Files:
 - Plots RMSE vs alpha for each lambda and outputs to file (Sutton Figure 4).
 
 ### Figure5.py
-![Figure 5](Figure5.png)
 - Implements numpy, random, and matplotlib. Also implements the randomWalk and ExperimentTwo functions above.
 - Seeded with random.seed(1)
 - Initially creates 100 training sets of 10 randomWalk sequences.
