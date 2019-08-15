@@ -5,7 +5,9 @@
 In this project, I replicate the experiments used by Sutton in “Learning to Predict by the Methods of Temporal Differences” [Sutton, 1988]. Sutton performs two experiments and produces a number of figures using a bounded Random Walk as a simple example. His experiments show the performance difference between TD(1) (the Widrow-Hoff supervised learning rule) and TD(lambda). TD(lambda) outperforms TD(1) in both experiments (for some value of lambda < 1). I successfully reproduce the figures and explain the implementation used to recreate the experiments.
 
 [Sutton's full paper](/sutton-88-with-erratum.pdf)
+
 [Original Project Requirments](/CS7642_Project1.pdf)
+
 [Project Report](/Project1-gth836x.pdf)
 
 ## The Project
